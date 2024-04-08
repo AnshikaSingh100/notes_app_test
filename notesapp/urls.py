@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from api import Note_cruds
-
+from rest_framework.authtoken import views
 
 
 
@@ -28,6 +28,7 @@ urlpatterns = [
     path('getnote/<str:pk>/',Note_cruds.getanote),
     path('createnote',Note_cruds.createnote),
     path('updatenote/<str:pk>',Note_cruds.updatenote),
-    path('deletenote/<str:pk>',Note_cruds.deleteanote)
+    path('deletenote/<str:pk>',Note_cruds.deleteanote),
+    path('api-token-auth', views.obtain_auth_token)
 
 ]
