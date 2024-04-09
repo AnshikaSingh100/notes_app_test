@@ -10,9 +10,9 @@ class Users(models.Model):
     Password = models.CharField(max_length=100)
 
 class Notes(models.Model):
-    Title = models.TextField(default='Your Title here')
-    Content = models.TextField(default='Your Content here')
+    Title = models.TextField(default='Sample Title')
+    Content = models.TextField(default='Sample Content')
     Timestamp = models.DateTimeField(auto_now_add=True)
     User = models.ForeignKey(Users, on_delete=models.CASCADE, blank=False,null=False)
-
+    Readaccess = models.TextField(default='')
 

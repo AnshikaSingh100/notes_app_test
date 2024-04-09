@@ -19,20 +19,32 @@ def getallnotes(request):
 def getanote(request,pk):
     r = request.query_params['user']
     # dataa = Notes.objects.filter(User=r)
+
     data = Notes.objects.filter(id=pk, User=r)
+    if len(data)==0:
+        data_by_only_id = Notes.objects.filter(id=pk)
+        if len(data_by_only_id)==0:
+            return Response("Not a valid note id")
+        myread={x for x in data_by_only_id[0].Readaccess if x == str(r)}
+        if len(myread)!=0:
+            serializer = Noteserialiser(data_by_only_id, many=True)
+            return Response(serializer.data)
+
+
     serializer = Noteserialiser(data, many=True)
     return Response(serializer.data)
 
 @api_view(['POST'])
 def createnote(request):
 
-
     serializer = Noteserialiser(data=request.data)
 
-
-    #if request.data['Email'] in [None, ""]:
-        #return Response("Email Cannot be null or empty")
+    if request.data['User'] in [None, ""]:
+        return Response("User Cannot be null or empty")
     print("We are going to save it")
+    read_access_csv = request.data['Readaccess']
+    read_access_list = read_access_csv.split(',')
+
     if serializer.is_valid():
         print("yes it is possible to save it")
         serializer.save()
