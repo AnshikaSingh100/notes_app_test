@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # Create your models here.
 
 
@@ -14,5 +13,6 @@ class Notes(models.Model):
     Content = models.TextField(default='Sample Content')
     Timestamp = models.DateTimeField(auto_now_add=True)
     User = models.ForeignKey(Users, on_delete=models.CASCADE, blank=False,null=False)
-    Readaccess = models.TextField(default='')
+    Readaccess = models.TextField(default='',null=True,blank=True)
+
 
